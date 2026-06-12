@@ -1,3 +1,5 @@
+import type { ReactElement } from 'react';
+
 /**
  * Root application component.
  *
@@ -7,6 +9,6 @@
  *
  * @returns The top-level React element for the application.
  */
-export default function App(): React.ReactElement {
+export default function App(): ReactElement {
   return <div>Rompecabezas</div>;
 }
