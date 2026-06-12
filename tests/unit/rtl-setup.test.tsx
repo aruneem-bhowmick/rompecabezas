@@ -15,7 +15,7 @@ describe('React Testing Library integration', () => {
    */
   it('renders a React element into the jsdom environment', () => {
     render(<p>hello</p>);
-    expect(screen.getByText('hello')).toBeDefined();
+    expect(screen.getByText('hello')).toBeInTheDocument();
   });
 
   /**
