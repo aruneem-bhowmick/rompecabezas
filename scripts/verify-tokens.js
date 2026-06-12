@@ -2,22 +2,33 @@
  * Build verification script for Tailwind CSS design tokens.
  *
  * Runs `npm run build`, then inspects the compiled CSS in dist/ to
- * confirm that every design token color value made it through the
- * Tailwind/PostCSS pipeline. Exits with code 1 if any token is missing.
+ * confirm that every design token made it through the Tailwind/PostCSS
+ * pipeline. Exits with code 1 if any token is missing.
  */
 
 import { execSync } from 'node:child_process';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-/** Design token hex values that must appear in compiled CSS. */
+/**
+ * All nine design tokens that must appear in compiled CSS.
+ *
+ * Color tokens are matched by value. The line token uses a prefix match
+ * because Vite's minifier strips the leading zero from 0.12 → .12.
+ * Non-color tokens (card, snap) are matched by their CSS custom property
+ * name since their values (10px, 200ms) are too generic for substring
+ * matching.
+ */
 const EXPECTED_TOKENS = [
-  { name: 'ink', value: '#1b1d1c' },
-  { name: 'paper', value: '#f4f5f2' },
-  { name: 'felt', value: '#2f6b53' },
-  { name: 'felt-deep', value: '#255843' },
-  { name: 'marigold', value: '#e8a13a' },
-  { name: 'slate', value: '#5b636a' },
+  { name: 'ink', search: '#1b1d1c' },
+  { name: 'paper', search: '#f4f5f2' },
+  { name: 'felt', search: '#2f6b53' },
+  { name: 'felt-deep', search: '#255843' },
+  { name: 'marigold', search: '#e8a13a' },
+  { name: 'slate', search: '#5b636a' },
+  { name: 'line', search: 'rgba(27, 29, 28,' },
+  { name: 'card (border-radius)', search: '--card' },
+  { name: 'snap (transition-duration)', search: '--snap' },
 ];
 
 /**
@@ -53,10 +64,10 @@ const css = readBuiltCss();
 let allFound = true;
 
 for (const token of EXPECTED_TOKENS) {
-  if (css.includes(token.value)) {
-    console.log(`  ✓ ${token.name} (${token.value})`);
+  if (css.includes(token.search)) {
+    console.log(`  ✓ ${token.name} (${token.search})`);
   } else {
-    console.error(`  ✗ ${token.name} (${token.value}) — NOT FOUND`);
+    console.error(`  ✗ ${token.name} (${token.search}) — NOT FOUND`);
     allFound = false;
   }
 }
