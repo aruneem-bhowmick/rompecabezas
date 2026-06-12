@@ -70,9 +70,10 @@ export default [
     },
   },
 
-  /* Test files — TypeScript-aware linting without React-specific rules */
+  /* Test files (jsdom) — browser globals for component and DOM tests */
   {
     files: ['tests/**/*.{ts,tsx}'],
+    ignores: ['tests/**/*.node.test.{ts,tsx}'],
     languageOptions: {
       parser: tsParser,
       ecmaVersion: 2020,
@@ -82,6 +83,27 @@ export default [
       },
       parserOptions: {
         ecmaFeatures: { jsx: true },
+      },
+    },
+    plugins: {
+      '@typescript-eslint': tsPlugin,
+    },
+    rules: {
+      ...tsPlugin.configs.recommended.rules,
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    },
+  },
+
+  /* Test files (Node) — Node globals for tests that use fs, path, etc. */
+  {
+    files: ['tests/**/*.node.test.{ts,tsx}'],
+    languageOptions: {
+      parser: tsParser,
+      ecmaVersion: 2020,
+      sourceType: 'module',
+      globals: {
+        ...globals.node,
       },
     },
     plugins: {
