@@ -1,7 +1,10 @@
+/**
+ * @vitest-environment node
+ */
 import { describe, it, expect } from 'vitest';
-import { readFileSync } from 'fs';
-import { resolve, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { readFileSync } from 'node:fs';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
 
@@ -9,6 +12,9 @@ const currentDir = dirname(fileURLToPath(import.meta.url));
  * Validates that the Vitest configuration file declares the expected
  * test runner settings.  These assertions act as a regression guard
  * against accidental changes to the shared test infrastructure.
+ *
+ * Runs in the Node environment (not jsdom) because the test reads
+ * vitest.config.ts from disk rather than importing it.
  */
 describe('vitest.config.ts contract', () => {
   const configContent = readFileSync(resolve(currentDir, '../../vitest.config.ts'), 'utf-8');
