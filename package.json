@@ -7,19 +7,33 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
+    "lint": "eslint src/ --max-warnings 0",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"*.{js,ts,json}\"",
     "test:smoke": "tsc --noEmit && vite build",
-    "verify:tokens": "node scripts/verify-tokens.js"
+    "verify:tokens": "node scripts/verify-tokens.js",
+    "verify:lint": "node scripts/verify-lint.js",
+    "verify:lint-violations": "node scripts/verify-lint-catches-violations.js"
   },
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
+    "@typescript-eslint/eslint-plugin": "^8.61.0",
+    "@typescript-eslint/parser": "^8.61.0",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.5.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
     "postcss": "^8.5.15",
+    "prettier": "^3.8.4",
     "tailwindcss": "^3.4.19",
     "typescript": "~5.7.2",
     "vite": "^6.0.5"
