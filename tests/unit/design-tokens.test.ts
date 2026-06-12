@@ -1,19 +1,22 @@
 import { describe, expect, it } from 'vitest';
-import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from '../../tailwind.config';
 
-const fullConfig = resolveConfig(tailwindConfig);
-
-/*
- * Read token values from theme.extend (our tokens only) rather than the
- * fully resolved theme, where Tailwind's default colors are nested
- * objects and would make Record<string, string> a lie.
+/**
+ * Token values are read from theme.extend (the project's own tokens)
+ * rather than the fully resolved theme, where Tailwind's default
+ * colors are nested objects and would make Record<string, string>
+ * incorrect.
  */
 const extended = tailwindConfig.theme?.extend ?? {};
 const colors = extended.colors as Record<string, string>;
 const borderRadius = extended.borderRadius as Record<string, string>;
 const transitionDuration = extended.transitionDuration as Record<string, string>;
 
+/**
+ * Regression tests for the Tailwind design tokens declared in
+ * tailwind.config.ts.  Each token is asserted against its expected
+ * value to prevent accidental drift in the design system.
+ */
 describe('design tokens', () => {
   describe('colors', () => {
     it('defines ink token', () => {
@@ -58,6 +61,6 @@ describe('design tokens', () => {
   });
 
   it('matches the full extended theme snapshot', () => {
-    expect(fullConfig.theme.extend).toMatchSnapshot();
+    expect(tailwindConfig.theme?.extend).toMatchSnapshot();
   });
 });

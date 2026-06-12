@@ -14,5 +14,9 @@ dist/
 .specstory/
 .cursorindexingignore
 
+# Test artifacts
+test-results/
+playwright-report/
+
 # Private local documentation
 docs-rompecabezas/

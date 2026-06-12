@@ -1,0 +1,21 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`design tokens > matches the full extended theme snapshot 1`] = `
+{
+  "borderRadius": {
+    "card": "10px",
+  },
+  "colors": {
+    "felt": "#2f6b53",
+    "felt-deep": "#255843",
+    "ink": "#1b1d1c",
+    "line": "rgba(27, 29, 28, 0.12)",
+    "marigold": "#e8a13a",
+    "paper": "#f4f5f2",
+    "slate": "#5b636a",
+  },
+  "transitionDuration": {
+    "snap": "200ms",
+  },
+}
+`;
