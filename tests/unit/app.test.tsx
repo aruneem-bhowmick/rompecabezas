@@ -24,7 +24,7 @@ describe('App component', () => {
    */
   it('applies design-token utility classes to the root element', () => {
     render(<App />);
-    const root = screen.getByText('Rompecabezas');
+    const root = screen.getByTestId('app-root');
     expect(root).toHaveClass('bg-paper');
     expect(root).toHaveClass('text-ink');
   });
@@ -35,7 +35,7 @@ describe('App component', () => {
    */
   it('fills the viewport height', () => {
     render(<App />);
-    const root = screen.getByText('Rompecabezas');
+    const root = screen.getByTestId('app-root');
     expect(root).toHaveClass('min-h-screen');
   });
 });
