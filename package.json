@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "lint": "eslint src/ --max-warnings 0",
+    "lint": "eslint src/ tests/ --max-warnings 0",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"*.{js,ts,json}\"",
     "test": "vitest run",
     "test:watch": "vitest",

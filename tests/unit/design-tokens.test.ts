@@ -1,8 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from '../../tailwind.config';
-
-const fullConfig = resolveConfig(tailwindConfig);
 
 /*
  * Read token values from theme.extend (our tokens only) rather than the
@@ -58,6 +55,6 @@ describe('design tokens', () => {
   });
 
   it('matches the full extended theme snapshot', () => {
-    expect(fullConfig.theme.extend).toMatchSnapshot();
+    expect(tailwindConfig.theme?.extend).toMatchSnapshot();
   });
 });
