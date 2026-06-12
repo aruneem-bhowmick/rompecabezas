@@ -7,6 +7,19 @@ import reactRefreshPlugin from 'eslint-plugin-react-refresh';
 import prettierConfig from 'eslint-config-prettier';
 import globals from 'globals';
 
+/** Vitest global test APIs injected when globals: true is set. */
+const vitestGlobals = {
+  describe: 'readonly',
+  it: 'readonly',
+  test: 'readonly',
+  expect: 'readonly',
+  vi: 'readonly',
+  beforeAll: 'readonly',
+  afterAll: 'readonly',
+  beforeEach: 'readonly',
+  afterEach: 'readonly',
+};
+
 /**
  * ESLint flat configuration for the Rompecabezas project.
  *
@@ -80,6 +93,7 @@ export default [
       sourceType: 'module',
       globals: {
         ...globals.browser,
+        ...vitestGlobals,
       },
       parserOptions: {
         ecmaFeatures: { jsx: true },
@@ -104,6 +118,7 @@ export default [
       sourceType: 'module',
       globals: {
         ...globals.node,
+        ...vitestGlobals,
       },
     },
     plugins: {
