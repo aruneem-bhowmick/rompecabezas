@@ -10,7 +10,9 @@
     "lint": "eslint src/ --max-warnings 0",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"*.{js,ts,json}\"",
     "test:smoke": "tsc --noEmit && vite build",
-    "verify:tokens": "node scripts/verify-tokens.js"
+    "verify:tokens": "node scripts/verify-tokens.js",
+    "verify:lint": "node scripts/verify-lint.js",
+    "verify:lint-violations": "node scripts/verify-lint-catches-violations.js"
   },
   "dependencies": {
     "react": "^18.3.1",
