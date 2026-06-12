@@ -3,9 +3,16 @@ import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from '../../tailwind.config';
 
 const fullConfig = resolveConfig(tailwindConfig);
-const colors = fullConfig.theme.colors as Record<string, string>;
-const borderRadius = fullConfig.theme.borderRadius as Record<string, string>;
-const transitionDuration = fullConfig.theme.transitionDuration as Record<string, string>;
+
+/*
+ * Read token values from theme.extend (our tokens only) rather than the
+ * fully resolved theme, where Tailwind's default colors are nested
+ * objects and would make Record<string, string> a lie.
+ */
+const extended = tailwindConfig.theme?.extend ?? {};
+const colors = extended.colors as Record<string, string>;
+const borderRadius = extended.borderRadius as Record<string, string>;
+const transitionDuration = extended.transitionDuration as Record<string, string>;
 
 describe('design tokens', () => {
   describe('colors', () => {
