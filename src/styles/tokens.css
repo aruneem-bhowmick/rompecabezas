@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --ink: #1b1d1c;
+    --paper: #f4f5f2;
+    --felt: #2f6b53;
+    --felt-deep: #255843;
+    --marigold: #e8a13a;
+    --slate: #5b636a;
+    --line: rgba(27, 29, 28, 0.12);
+    --card: 10px;
+    --snap: 200ms;
+  }
+}

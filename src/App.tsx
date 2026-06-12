@@ -10,5 +10,5 @@ import type { ReactElement } from 'react';
  * @returns The top-level React element for the application.
  */
 export default function App(): ReactElement {
-  return <div>Rompecabezas</div>;
+  return <div className="min-h-screen bg-paper text-ink">Rompecabezas</div>;
 }
