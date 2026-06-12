@@ -11,5 +11,7 @@
     --marigold: #e8a13a;
     --slate: #5b636a;
     --line: rgba(27, 29, 28, 0.12);
+    --card: 10px;
+    --snap: 200ms;
   }
 }
