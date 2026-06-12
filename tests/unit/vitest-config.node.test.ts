@@ -2,29 +2,28 @@
  * @vitest-environment node
  */
 import { describe, it, expect } from 'vitest';
-import { readFileSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import vitestConfig from '../../vitest.config';
 
-const currentDir = dirname(fileURLToPath(import.meta.url));
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const config = (vitestConfig as any).test;
 
 /**
- * Validates that the Vitest configuration file declares the expected
- * test runner settings.  These assertions act as a regression guard
- * against accidental changes to the shared test infrastructure.
+ * Validates that the Vitest configuration object declares the
+ * expected test runner settings.  These assertions act as a
+ * regression guard against accidental changes to the shared test
+ * infrastructure.
  *
- * Runs in the Node environment (not jsdom) because the test reads
- * vitest.config.ts from disk rather than importing it.
+ * Runs in the Node environment (not jsdom) so that importing the
+ * Vite config (which loads @vitejs/plugin-react and esbuild) does
+ * not conflict with jsdom's TextEncoder polyfill.
  */
 describe('vitest.config.ts contract', () => {
-  const configContent = readFileSync(resolve(currentDir, '../../vitest.config.ts'), 'utf-8');
-
   /**
    * The jsdom environment is required for all component and DOM-aware
    * unit tests.  If this value changes, RTL tests will break.
    */
   it('specifies jsdom as the test environment', () => {
-    expect(configContent).toContain("environment: 'jsdom'");
+    expect(config.environment).toBe('jsdom');
   });
 
   /**
@@ -32,7 +31,7 @@ describe('vitest.config.ts contract', () => {
    * without explicit imports in every test file.
    */
   it('enables global test APIs', () => {
-    expect(configContent).toContain('globals: true');
+    expect(config.globals).toBe(true);
   });
 
   /**
@@ -40,7 +39,7 @@ describe('vitest.config.ts contract', () => {
    * matchers are registered before test execution.
    */
   it('references the shared setup file', () => {
-    expect(configContent).toContain('./tests/setup.ts');
+    expect(config.setupFiles).toContain('./tests/setup.ts');
   });
 
   /**
@@ -48,8 +47,8 @@ describe('vitest.config.ts contract', () => {
    * to enforce quality on business logic without penalizing UI code.
    */
   it('targets pure-logic modules for coverage collection', () => {
-    expect(configContent).toContain('src/lib/**');
-    expect(configContent).toContain('src/image/**');
+    expect(config.coverage.include).toContain('src/lib/**');
+    expect(config.coverage.include).toContain('src/image/**');
   });
 
   /**
@@ -57,9 +56,11 @@ describe('vitest.config.ts contract', () => {
    * prevent regressions in test coverage for critical modules.
    */
   it('enforces 90% coverage thresholds', () => {
-    expect(configContent).toContain('statements: 90');
-    expect(configContent).toContain('branches: 90');
-    expect(configContent).toContain('functions: 90');
-    expect(configContent).toContain('lines: 90');
+    expect(config.coverage.thresholds).toEqual({
+      statements: 90,
+      branches: 90,
+      functions: 90,
+      lines: 90,
+    });
   });
 });
