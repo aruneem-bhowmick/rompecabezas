@@ -1,0 +1,9 @@
+# Tool/editor directories
+.claude/
+.vscode/
+.history/
+.specstory/
+.cursorindexingignore
+
+# Private local documentation
+docs-rompecabezas/
