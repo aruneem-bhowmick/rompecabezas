@@ -6,7 +6,7 @@ exports[`App composition > matches snapshot 1`] = `
   data-testid="app-root"
 >
   <header
-    class="flex items-center justify-between border-b border-line px-4 py-3"
+    class="flex items-center justify-between gap-3 border-b border-line px-4 py-3"
   >
     <h1
       class="font-display text-xl font-bold sm:text-2xl"
@@ -28,6 +28,7 @@ exports[`App composition > matches snapshot 1`] = `
       Difficulty controls
     </span>
     <span
+      aria-hidden="true"
       class="font-body tabular-nums text-marigold"
       data-testid="timer-sample"
     >
@@ -42,16 +43,17 @@ exports[`App composition > matches snapshot 1`] = `
       id="puzzle-mount"
     />
     <span
+      aria-hidden="true"
       class="pointer-events-none select-none text-lg text-paper/40"
     >
       Puzzle board
     </span>
   </main>
   <footer
-    class="flex items-center justify-between border-t border-line px-4 py-3"
+    class="flex flex-wrap items-center justify-between gap-2 border-t border-line px-4 py-3"
   >
     <div
-      class="flex gap-2"
+      class="flex flex-wrap gap-2"
     >
       <button
         aria-disabled="true"
