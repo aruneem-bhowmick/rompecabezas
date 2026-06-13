@@ -6,12 +6,14 @@ import App from '../../src/App';
  * Smoke tests for the root App component.
  *
  * These assertions verify the application shell renders without
- * errors in the jsdom environment and applies the expected design
+ * errors in the jsdom environment, composes the three-region layout
+ * (TopBar, StageArea, ControlBar), and applies the expected design
  * tokens and typography utilities as Tailwind classes.
  */
 describe('App component', () => {
   /**
-   * Confirms the App component mounts and displays its root content.
+   * Confirms the App component mounts and displays the wordmark
+   * rendered inside the TopBar child component.
    */
   it('renders the application name', () => {
     render(<App />);
@@ -50,8 +52,8 @@ describe('App component', () => {
   });
 
   /**
-   * Verifies the heading uses the Bricolage Grotesque display font
-   * for the application wordmark.
+   * Verifies the heading inside TopBar uses the Bricolage Grotesque
+   * display font for the application wordmark.
    */
   it('renders the heading with the display font family', () => {
     render(<App />);
@@ -60,13 +62,23 @@ describe('App component', () => {
   });
 
   /**
-   * Verifies a tabular-nums sample element exists for timer-style
-   * numeral rendering.
+   * Verifies the timer placeholder inside TopBar uses tabular-nums
+   * for consistent numeral widths.
    */
   it('includes a tabular-nums sample element', () => {
     render(<App />);
     const sample = screen.getByTestId('timer-sample');
     expect(sample).toHaveClass('tabular-nums');
     expect(sample).toHaveTextContent('00:00');
+  });
+
+  /**
+   * Confirms the root element uses a flex column layout to stack
+   * the three layout regions vertically.
+   */
+  it('uses a flex column layout', () => {
+    render(<App />);
+    const root = screen.getByTestId('app-root');
+    expect(root).toHaveClass('flex', 'flex-col');
   });
 });
