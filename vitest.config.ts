@@ -10,9 +10,8 @@ import react from '@vitejs/plugin-react';
  * extended DOM matchers from @testing-library/jest-dom.
  *
  * Coverage is collected via the V8 provider and enforced at 90 %
- * thresholds for the pure-logic modules under src/lib/ and src/image/.
- * These directories are forward-looking targets; the thresholds will
- * activate once source files exist there.
+ * thresholds for the pure-logic modules under src/lib/ and src/image/,
+ * and at 80 % for the UI components under src/ui/.
  */
 export default defineConfig({
   plugins: [react()],
@@ -23,12 +22,26 @@ export default defineConfig({
     include: ['tests/**/*.test.{ts,tsx}', 'src/**/*.test.{ts,tsx}'],
     coverage: {
       provider: 'v8',
-      include: ['src/lib/**', 'src/image/**'],
+      include: ['src/lib/**', 'src/image/**', 'src/ui/**'],
       thresholds: {
-        statements: 90,
-        branches: 90,
-        functions: 90,
-        lines: 90,
+        'src/lib/**': {
+          statements: 90,
+          branches: 90,
+          functions: 90,
+          lines: 90,
+        },
+        'src/image/**': {
+          statements: 90,
+          branches: 90,
+          functions: 90,
+          lines: 90,
+        },
+        'src/ui/**': {
+          statements: 80,
+          branches: 80,
+          functions: 80,
+          lines: 80,
+        },
       },
     },
   },

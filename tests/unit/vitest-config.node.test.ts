@@ -44,23 +44,43 @@ describe('vitest.config.ts contract', () => {
 
   /**
    * Coverage must target the pure-logic modules (src/lib/, src/image/)
-   * to enforce quality on business logic without penalizing UI code.
+   * and UI components (src/ui/) for quality enforcement.
    */
-  it('targets pure-logic modules for coverage collection', () => {
+  it('targets pure-logic modules and UI components for coverage collection', () => {
     expect(config.coverage.include).toContain('src/lib/**');
     expect(config.coverage.include).toContain('src/image/**');
+    expect(config.coverage.include).toContain('src/ui/**');
   });
 
   /**
    * 90% thresholds on statements, branches, functions, and lines
    * prevent regressions in test coverage for critical modules.
    */
-  it('enforces 90% coverage thresholds', () => {
-    expect(config.coverage.thresholds).toEqual({
+  it('enforces 90% coverage thresholds for logic modules', () => {
+    expect(config.coverage.thresholds['src/lib/**']).toEqual({
       statements: 90,
       branches: 90,
       functions: 90,
       lines: 90,
+    });
+    expect(config.coverage.thresholds['src/image/**']).toEqual({
+      statements: 90,
+      branches: 90,
+      functions: 90,
+      lines: 90,
+    });
+  });
+
+  /**
+   * 80% thresholds for UI components allow reasonable coverage
+   * without over-constraining presentational code.
+   */
+  it('enforces 80% coverage thresholds for UI components', () => {
+    expect(config.coverage.thresholds['src/ui/**']).toEqual({
+      statements: 80,
+      branches: 80,
+      functions: 80,
+      lines: 80,
     });
   });
 });
