@@ -7,7 +7,7 @@ import App from '../../src/App';
  *
  * These assertions verify the application shell renders without
  * errors in the jsdom environment and applies the expected design
- * tokens as Tailwind utility classes.
+ * tokens and typography utilities as Tailwind classes.
  */
 describe('App component', () => {
   /**
@@ -37,5 +37,36 @@ describe('App component', () => {
     render(<App />);
     const root = screen.getByTestId('app-root');
     expect(root).toHaveClass('min-h-screen');
+  });
+
+  /**
+   * Verifies the root container uses the Inter body font family
+   * as the default typeface for all UI text.
+   */
+  it('applies the body font family to the root element', () => {
+    render(<App />);
+    const root = screen.getByTestId('app-root');
+    expect(root).toHaveClass('font-body');
+  });
+
+  /**
+   * Verifies the heading uses the Bricolage Grotesque display font
+   * for the application wordmark.
+   */
+  it('renders the heading with the display font family', () => {
+    render(<App />);
+    const heading = screen.getByRole('heading', { level: 1 });
+    expect(heading).toHaveClass('font-display');
+  });
+
+  /**
+   * Verifies a tabular-nums sample element exists for timer-style
+   * numeral rendering.
+   */
+  it('includes a tabular-nums sample element', () => {
+    render(<App />);
+    const sample = screen.getByTestId('timer-sample');
+    expect(sample).toHaveClass('tabular-nums');
+    expect(sample).toHaveTextContent('00:00');
   });
 });
