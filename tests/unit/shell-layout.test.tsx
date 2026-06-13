@@ -24,9 +24,16 @@ describe('TopBar', () => {
     expect(screen.getByText('Rompecabezas')).toBeInTheDocument();
   });
 
-  it('displays the short wordmark for small viewports', () => {
+  it('uses responsive classes to toggle between full and short wordmark', () => {
     render(<TopBar />);
-    expect(screen.getByText('Rompe')).toBeInTheDocument();
+    const fullSpan = screen.getByText('Rompecabezas');
+    const shortSpan = screen.getByText('Rompe');
+    // Full wordmark hidden by default, shown at sm+
+    expect(fullSpan).toHaveClass('hidden');
+    expect(fullSpan).toHaveClass('sm:inline');
+    // Short wordmark shown by default, hidden at sm+
+    expect(shortSpan).toHaveClass('inline');
+    expect(shortSpan).toHaveClass('sm:hidden');
   });
 
   it('renders the wordmark with the display font', () => {
