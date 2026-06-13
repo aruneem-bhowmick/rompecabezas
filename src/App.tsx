@@ -1,22 +1,26 @@
 import type { ReactElement } from 'react';
+import TopBar from './ui/TopBar';
+import StageArea from './ui/StageArea';
+import ControlBar from './ui/ControlBar';
 
 /**
  * Root application component.
  *
- * Renders a minimal placeholder that applies the project's typography
- * system — Bricolage Grotesque for display headings and Inter for body
- * text — and verifies tabular numeral rendering for timer-style content.
+ * Composes the three-region layout shell — TopBar, StageArea, and
+ * ControlBar — inside a full-height flex column. Design tokens for
+ * background, text color, and body font are applied at this root level.
  *
  * @returns The top-level React element for the application.
  */
 export default function App(): ReactElement {
   return (
-    <div data-testid="app-root" className="min-h-screen bg-paper font-body text-ink">
-      <h1 className="font-display text-4xl font-bold">Rompecabezas</h1>
-      <p>A jigsaw puzzle for your browser.</p>
-      <p className="tabular-nums" data-testid="timer-sample">
-        00:00
-      </p>
+    <div
+      data-testid="app-root"
+      className="flex min-h-screen flex-col bg-paper font-body text-ink"
+    >
+      <TopBar />
+      <StageArea />
+      <ControlBar />
     </div>
   );
 }
