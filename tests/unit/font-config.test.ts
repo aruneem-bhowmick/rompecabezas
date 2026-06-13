@@ -43,17 +43,15 @@ describe('font configuration', () => {
     expect(body?.length).toBeGreaterThan(1);
   });
 
-  it('uses serif fallbacks for the display family', () => {
+  it('terminates the display fallback stack with the serif generic family', () => {
     const display = fontFamily?.display;
     expect(display).toBeDefined();
-    const fallbacks = display?.slice(1).join(' ').toLowerCase() ?? '';
-    expect(fallbacks).toContain('serif');
+    expect(display?.slice(-1)[0]?.toLowerCase()).toBe('serif');
   });
 
-  it('uses sans-serif fallbacks for the body family', () => {
+  it('terminates the body fallback stack with the sans-serif generic family', () => {
     const body = fontFamily?.body;
     expect(body).toBeDefined();
-    const fallbacks = body?.slice(1).join(' ').toLowerCase() ?? '';
-    expect(fallbacks).toContain('sans-serif');
+    expect(body?.slice(-1)[0]?.toLowerCase()).toBe('sans-serif');
   });
 });
