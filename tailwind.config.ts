@@ -4,13 +4,17 @@ import type { Config } from 'tailwindcss';
  * Tailwind CSS theme configuration.
  *
  * Extends the default theme with project design tokens — colors, border
- * radii, and transition durations — so every UI component references a
- * single source of truth for visual consistency.
+ * radii, transition durations, and font families — so every UI component
+ * references a single source of truth for visual consistency.
  */
 const config: Config = {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        display: ['"Bricolage Grotesque"', 'ui-serif', 'Georgia', 'serif'],
+        body: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      },
       colors: {
         ink: '#1b1d1c',
         paper: '#f4f5f2',
