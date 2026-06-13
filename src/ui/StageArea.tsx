@@ -14,7 +14,11 @@ export default function StageArea(): ReactElement {
       style={{ boxShadow: 'inset 0 2px 12px rgba(0,0,0,0.3)' }}
     >
       <div id="puzzle-mount" />
-      <span className="pointer-events-none select-none text-lg text-paper/40" aria-hidden="true">
+      <span
+        className="pointer-events-none select-none text-lg text-paper/40"
+        aria-hidden="true"
+        data-testid="stage-watermark"
+      >
         Puzzle board
       </span>
     </main>
