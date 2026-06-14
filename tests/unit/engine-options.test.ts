@@ -197,6 +197,25 @@ describe('computeEngineOptions', () => {
     });
     expect(opts.borderFill).toBeGreaterThanOrEqual(1);
   });
+
+  /**
+   * Regression snapshot for the 4x3 grid at 800x600 reference input.
+   * Locks the full options object so any drift in the computation is
+   * caught automatically. The image property is excluded from the
+   * snapshot since it is a mock object reference.
+   */
+  it('produces stable output for the reference 4x3 grid (regression)', () => {
+    const opts = computeEngineOptions({
+      boardW: 800,
+      boardH: 600,
+      cols: 4,
+      rows: 3,
+      image: mockImage(),
+    });
+    // Exclude the image (mock reference) from the snapshot
+    const { image: _image, ...snapshotOpts } = opts;
+    expect(snapshotOpts).toMatchSnapshot();
+  });
 });
 
 describe('computeAutogenerateOptions', () => {
