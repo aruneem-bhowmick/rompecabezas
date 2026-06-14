@@ -10,3 +10,5 @@ export { Canvas, painters, generators, outline } from 'headbreaker';
 export { default as Konva } from 'konva';
 export { loadImage } from './loadImage';
 export { sampleUrl } from './sampleImage';
+export { computeEngineOptions, computeAutogenerateOptions } from './engineOptions';
+export type { EngineInput, CanvasOptions, AutogenerateOptions } from './engineOptions';
