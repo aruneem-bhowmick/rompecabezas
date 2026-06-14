@@ -1,5 +1,9 @@
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
  * Vitest test runner configuration.
@@ -9,12 +13,21 @@ import react from '@vitejs/plugin-react';
  * are optional, and loads the shared setup file that registers
  * extended DOM matchers from @testing-library/jest-dom.
  *
+ * Konva is aliased to its browser build because the default Node.js
+ * entry point requires the native `canvas` npm package, which is not
+ * needed in a jsdom test environment.
+ *
  * Coverage is collected via the V8 provider and enforced at 90 %
  * thresholds for the pure-logic modules under src/lib/ and src/image/,
  * and at 80 % for the UI components under src/ui/.
  */
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    alias: {
+      konva: path.resolve(__dirname, 'node_modules/konva/lib/index.js'),
+    },
+  },
   test: {
     globals: true,
     environment: 'jsdom',
