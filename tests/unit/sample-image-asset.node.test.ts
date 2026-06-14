@@ -76,7 +76,7 @@ function parseJpegDimensions(buffer: Buffer): { width: number; height: number } 
       continue;
     }
 
-    const marker = buffer[offset + 1];
+    const marker = buffer[offset + 1]!;
 
     // SOF0 (baseline) or SOF2 (progressive) markers
     if (marker === 0xc0 || marker === 0xc2) {
