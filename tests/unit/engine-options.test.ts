@@ -150,20 +150,29 @@ describe('computeEngineOptions', () => {
   });
 
   /**
-   * Verifies that the Konva painter and Rounded outline instances are
-   * present in the output, ensuring the canvas will render correctly
-   * when using the bundled import path.
+   * Verifies that the painter and outline are instances of the
+   * expected mock constructors by checking the type tags set during
+   * construction, and that each call produces fresh instances rather
+   * than returning cached singletons.
    */
-  it('includes painter (Konva) and outline (Rounded)', () => {
-    const opts = computeEngineOptions({
+  it('includes painter (Konva) and outline (Rounded) as fresh instances', () => {
+    const input = {
       boardW: 800,
       boardH: 600,
       cols: 4,
       rows: 3,
       image: mockImage(),
-    });
-    expect(opts.painter).toBeDefined();
-    expect(opts.outline).toBeDefined();
+    };
+    const opts1 = computeEngineOptions(input);
+    const opts2 = computeEngineOptions(input);
+
+    // Identity: correct constructor produced each instance
+    expect((opts1.painter as { type: string }).type).toBe('konva-painter');
+    expect((opts1.outline as { type: string }).type).toBe('rounded-outline');
+
+    // Freshness: each call returns new instances, not cached references
+    expect(opts1.painter).not.toBe(opts2.painter);
+    expect(opts1.outline).not.toBe(opts2.outline);
   });
 
   /**
