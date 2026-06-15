@@ -1,0 +1,25 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`computeEngineOptions > produces stable output for the reference 4x3 grid (regression) 1`] = `
+{
+  "borderFill": 20,
+  "fixed": true,
+  "height": 600,
+  "image": "[mock HTMLImageElement]",
+  "lineSoftness": 0.16,
+  "outline": MockRoundedOutline {
+    "type": "rounded-outline",
+  },
+  "painter": MockKonvaPainter {
+    "type": "konva-painter",
+  },
+  "pieceSize": {
+    "x": 200,
+    "y": 200,
+  },
+  "proximity": 40,
+  "strokeColor": "#5b636a",
+  "strokeWidth": 1.5,
+  "width": 800,
+}
+`;
