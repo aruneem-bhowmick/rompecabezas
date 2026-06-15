@@ -199,6 +199,93 @@ describe('computeEngineOptions', () => {
   });
 
   /**
+   * Verifies that zero cols or rows throws a RangeError instead of
+   * silently producing Infinity from the division.
+   */
+  it('throws RangeError when cols is zero', () => {
+    expect(() =>
+      computeEngineOptions({
+        boardW: 800,
+        boardH: 600,
+        cols: 0,
+        rows: 3,
+        image: mockImage(),
+      }),
+    ).toThrow(RangeError);
+  });
+
+  it('throws RangeError when rows is zero', () => {
+    expect(() =>
+      computeEngineOptions({
+        boardW: 800,
+        boardH: 600,
+        cols: 4,
+        rows: 0,
+        image: mockImage(),
+      }),
+    ).toThrow(RangeError);
+  });
+
+  /**
+   * Verifies that negative grid dimensions are rejected.
+   */
+  it('throws RangeError when cols is negative', () => {
+    expect(() =>
+      computeEngineOptions({
+        boardW: 800,
+        boardH: 600,
+        cols: -2,
+        rows: 3,
+        image: mockImage(),
+      }),
+    ).toThrow(RangeError);
+  });
+
+  /**
+   * Verifies that zero or negative board dimensions are rejected
+   * before reaching the division operations.
+   */
+  it('throws RangeError when boardW is zero', () => {
+    expect(() =>
+      computeEngineOptions({
+        boardW: 0,
+        boardH: 600,
+        cols: 4,
+        rows: 3,
+        image: mockImage(),
+      }),
+    ).toThrow(RangeError);
+  });
+
+  it('throws RangeError when boardH is negative', () => {
+    expect(() =>
+      computeEngineOptions({
+        boardW: 800,
+        boardH: -100,
+        cols: 4,
+        rows: 3,
+        image: mockImage(),
+      }),
+    ).toThrow(RangeError);
+  });
+
+  /**
+   * Verifies that the error message includes the offending values
+   * for debugging.
+   */
+  it('includes offending values in the error message', () => {
+    expect(() =>
+      computeEngineOptions({
+        boardW: 800,
+        boardH: 600,
+        cols: 0,
+        rows: -1,
+        image: mockImage(),
+      }),
+    ).toThrow(/cols=0/);
+  });
+
+  /**
    * Regression snapshot for the 4x3 grid at 800x600 reference input.
    * Locks the full options object so any drift in the computation is
    * caught automatically. The image property is excluded from the
