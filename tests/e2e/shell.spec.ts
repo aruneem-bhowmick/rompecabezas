@@ -44,7 +44,7 @@ test.describe('shell layout', () => {
   test('passes axe accessibility checks', async ({ page }) => {
     const results = await new AxeBuilder({ page })
       .exclude('[data-testid="timer-sample"]') // placeholder — will get proper contrast when functional
-      .exclude('[data-testid="stage-watermark"]') // decorative "Puzzle board" watermark
+      .exclude('[data-testid="puzzle-canvas"]') // canvas rendering area — not axe-testable
       .analyze();
     expect(results.violations).toEqual([]);
   });
