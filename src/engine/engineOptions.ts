@@ -11,13 +11,13 @@ import { painters, generators, outline } from 'headbreaker';
 
 /** Input parameters for computing engine options. */
 export interface EngineInput {
-  /** Canvas width in CSS pixels. */
+  /** Canvas width in CSS pixels. Must be positive (> 0). */
   boardW: number;
-  /** Canvas height in CSS pixels. */
+  /** Canvas height in CSS pixels. Must be positive (> 0). */
   boardH: number;
-  /** Number of horizontal pieces (columns). */
+  /** Number of horizontal pieces (columns). Positive integer >= 1. */
   cols: number;
-  /** Number of vertical pieces (rows). */
+  /** Number of vertical pieces (rows). Positive integer >= 1. */
   rows: number;
   /** The loaded, ready HTMLImageElement. */
   image: HTMLImageElement;
@@ -57,6 +57,7 @@ export interface AutogenerateOptions {
  *
  * @param input - Board dimensions, grid size, and the loaded image.
  * @returns The fully assembled options object for `new Canvas(id, opts)`.
+ * @throws {RangeError} If cols, rows, boardW, or boardH are zero or negative.
  */
 export function computeEngineOptions(input: EngineInput): CanvasOptions {
   const { boardW, boardH, cols, rows, image } = input;
