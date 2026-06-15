@@ -213,8 +213,7 @@ describe('computeEngineOptions', () => {
       image: mockImage(),
     });
     // Exclude the image (mock reference) from the snapshot
-    const { image: _image, ...snapshotOpts } = opts;
-    expect(snapshotOpts).toMatchSnapshot();
+    expect({ ...opts, image: '[mock HTMLImageElement]' }).toMatchSnapshot();
   });
 });
 

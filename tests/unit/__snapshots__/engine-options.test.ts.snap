@@ -5,6 +5,7 @@ exports[`computeEngineOptions > produces stable output for the reference 4x3 gri
   "borderFill": 20,
   "fixed": true,
   "height": 600,
+  "image": "[mock HTMLImageElement]",
   "lineSoftness": 0.16,
   "outline": MockRoundedOutline {
     "type": "rounded-outline",
