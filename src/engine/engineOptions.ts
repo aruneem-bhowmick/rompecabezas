@@ -61,6 +61,17 @@ export interface AutogenerateOptions {
 export function computeEngineOptions(input: EngineInput): CanvasOptions {
   const { boardW, boardH, cols, rows, image } = input;
 
+  if (cols <= 0 || rows <= 0) {
+    throw new RangeError(
+      `cols and rows must be positive numbers, got cols=${cols}, rows=${rows}`,
+    );
+  }
+  if (boardW <= 0 || boardH <= 0) {
+    throw new RangeError(
+      `boardW and boardH must be positive numbers, got boardW=${boardW}, boardH=${boardH}`,
+    );
+  }
+
   const pieceW = boardW / cols;
   const pieceH = boardH / rows;
   const minDim = Math.min(pieceW, pieceH);
