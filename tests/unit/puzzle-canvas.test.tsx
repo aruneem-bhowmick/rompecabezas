@@ -44,7 +44,8 @@ const mockLoadImage = vi.fn(
 );
 
 vi.mock('../../src/engine/loadImage', () => ({
-  loadImage: (...args: unknown[]) => mockLoadImage(...args),
+  loadImage: (...args: unknown[]) =>
+    mockLoadImage(...(args as Parameters<typeof mockLoadImage>)),
 }));
 
 vi.mock('../../src/engine/sampleImage', () => ({
@@ -186,10 +187,10 @@ describe('PuzzleCanvas', () => {
       loadImageResolve(createMockImage(1600, 1200));
     });
 
-    const adjustOrder = mockCanvas.adjustImagesToPuzzleHeight.mock.invocationCallOrder[0];
-    const autogenOrder = mockCanvas.autogenerate.mock.invocationCallOrder[0];
-    const shuffleOrder = mockCanvas.shuffle.mock.invocationCallOrder[0];
-    const drawOrder = mockCanvas.draw.mock.invocationCallOrder[0];
+    const adjustOrder = mockCanvas.adjustImagesToPuzzleHeight.mock.invocationCallOrder[0]!;
+    const autogenOrder = mockCanvas.autogenerate.mock.invocationCallOrder[0]!;
+    const shuffleOrder = mockCanvas.shuffle.mock.invocationCallOrder[0]!;
+    const drawOrder = mockCanvas.draw.mock.invocationCallOrder[0]!;
 
     expect(adjustOrder).toBeLessThan(autogenOrder);
     expect(autogenOrder).toBeLessThan(shuffleOrder);
@@ -227,7 +228,7 @@ describe('PuzzleCanvas', () => {
     });
 
     expect(mockCanvas.onConnect).toHaveBeenCalledTimes(1);
-    expect(typeof mockCanvas.onConnect.mock.calls[0][0]).toBe('function');
+    expect(typeof mockCanvas.onConnect.mock.calls[0]![0]).toBe('function');
   });
 
   it('calls attachSolvedValidator', async () => {
@@ -250,7 +251,7 @@ describe('PuzzleCanvas', () => {
     });
 
     expect(mockCanvas.onValid).toHaveBeenCalledTimes(1);
-    expect(typeof mockCanvas.onValid.mock.calls[0][0]).toBe('function');
+    expect(typeof mockCanvas.onValid.mock.calls[0]![0]).toBe('function');
   });
 
   it('calls canvas.clear() on unmount', async () => {
@@ -336,7 +337,7 @@ describe('PuzzleCanvas', () => {
 
     // imgAspect (1.78) > containerAspect (0.5) → constrain by width
     // boardW = 400, boardH = 400 / 1.78 ≈ 225
-    const call = vi.mocked(computeEngineOptions).mock.calls[0][0];
+    const call = vi.mocked(computeEngineOptions).mock.calls[0]![0];
     expect(call.boardW).toBe(400);
     expect(call.boardH).toBeCloseTo(400 / (1600 / 900), 5);
   });
@@ -360,7 +361,7 @@ describe('PuzzleCanvas', () => {
 
     // imgAspect (0.5625) < containerAspect (2) → constrain by height
     // boardH = 400, boardW = 400 * 0.5625 = 225
-    const call = vi.mocked(computeEngineOptions).mock.calls[0][0];
+    const call = vi.mocked(computeEngineOptions).mock.calls[0]![0];
     expect(call.boardH).toBe(400);
     expect(call.boardW).toBeCloseTo(400 * (900 / 1600), 5);
   });
