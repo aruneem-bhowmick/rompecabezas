@@ -318,6 +318,23 @@ describe('PuzzleCanvas', () => {
     expect(container.innerHTML).toBe('');
   });
 
+  it('shows error when container has zero dimensions', async () => {
+    const PuzzleCanvas = await importComponent();
+
+    clientWidthValue = 0;
+    clientHeightValue = 0;
+
+    render(<PuzzleCanvas />);
+
+    await act(async () => {
+      loadImageResolve(createMockImage(1600, 1200));
+    });
+
+    const alert = screen.getByRole('alert');
+    expect(alert).toBeInTheDocument();
+    expect(alert).toHaveTextContent('Unable to measure puzzle container');
+  });
+
   it('letterbox: landscape image into portrait container', async () => {
     const { computeEngineOptions } = await import(
       '../../src/engine/engineOptions'
