@@ -1,6 +1,10 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import App from '../../src/App';
+
+vi.mock('../../src/engine/puzzleCanvas', () => ({
+  default: () => <div data-testid="puzzle-canvas" />,
+}));
 
 /**
  * Smoke tests for the root App component.
@@ -9,6 +13,8 @@ import App from '../../src/App';
  * errors in the jsdom environment, composes the three-region layout
  * (TopBar, StageArea, ControlBar), and applies the expected design
  * tokens and typography utilities as Tailwind classes.
+ *
+ * PuzzleCanvas is mocked to avoid loading headbreaker/Konva in jsdom.
  */
 describe('App component', () => {
   /**

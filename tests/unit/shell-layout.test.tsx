@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import TopBar from '../../src/ui/TopBar';
 import StageArea from '../../src/ui/StageArea';
@@ -11,7 +11,14 @@ import App from '../../src/App';
  * Each region is tested in isolation for its landmark role, key
  * content, and styling. A final group tests the full App composition
  * and captures a snapshot for regression protection.
+ *
+ * PuzzleCanvas is mocked to avoid loading headbreaker/Konva in jsdom
+ * and to keep shell tests focused on layout structure.
  */
+
+vi.mock('../../src/engine/puzzleCanvas', () => ({
+  default: () => <div data-testid="puzzle-canvas" />,
+}));
 
 describe('TopBar', () => {
   it('renders as a header landmark', () => {
@@ -68,9 +75,9 @@ describe('StageArea', () => {
     expect(screen.getByRole('main')).toBeInTheDocument();
   });
 
-  it('contains the puzzle-mount div', () => {
-    const { container } = render(<StageArea />);
-    expect(container.querySelector('#puzzle-mount')).toBeInTheDocument();
+  it('renders the PuzzleCanvas component', () => {
+    render(<StageArea />);
+    expect(screen.getByTestId('puzzle-canvas')).toBeInTheDocument();
   });
 
   it('applies the felt background', () => {
@@ -83,11 +90,6 @@ describe('StageArea', () => {
     render(<StageArea />);
     const main = screen.getByRole('main');
     expect(main).toHaveClass('flex-1');
-  });
-
-  it('displays the placeholder text', () => {
-    render(<StageArea />);
-    expect(screen.getByText('Puzzle board')).toBeInTheDocument();
   });
 
   it('applies an inset box-shadow for the recessed tray', () => {

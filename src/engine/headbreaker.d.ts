@@ -9,9 +9,32 @@
  * Refine as additional API surface is consumed.
  */
 declare module 'headbreaker' {
+  /** Options accepted by the Canvas constructor. */
+  interface CanvasConstructorOptions {
+    width: number;
+    height: number;
+    pieceSize: { x: number; y: number };
+    proximity: number;
+    borderFill: number;
+    strokeWidth: number;
+    strokeColor: string;
+    lineSoftness: number;
+    image: HTMLImageElement;
+    fixed: boolean;
+    outline: unknown;
+    painter: unknown;
+  }
+
+  /** Options accepted by canvas.autogenerate(). */
+  interface AutogenerateMethodOptions {
+    horizontalPiecesCount: number;
+    verticalPiecesCount: number;
+    insertsGenerator: unknown;
+  }
+
   export class Canvas {
-    constructor(id: string, options: Record<string, unknown>);
-    autogenerate(options: Record<string, unknown>): void;
+    constructor(id: string, options: CanvasConstructorOptions);
+    autogenerate(options: AutogenerateMethodOptions): void;
     adjustImagesToPuzzleHeight(): void;
     shuffle(spread: number): void;
     draw(): void;
