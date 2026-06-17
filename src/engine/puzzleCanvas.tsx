@@ -31,6 +31,7 @@ export default function PuzzleCanvas(_props: PuzzleCanvasProps): ReactElement {
   useEffect(() => {
     let cancelled = false;
     const mountEl = mountRef.current;
+    const pendingTimeouts: ReturnType<typeof setTimeout>[] = [];
 
     async function init() {
       try {
@@ -73,17 +74,9 @@ export default function PuzzleCanvas(_props: PuzzleCanvasProps): ReactElement {
           image,
         });
 
-        const canvas = new Canvas(
-          mountId,
-          options as unknown as Record<string, unknown>,
-        );
+        const canvas = new Canvas(mountId, options);
         canvas.adjustImagesToPuzzleHeight();
-        canvas.autogenerate(
-          computeAutogenerateOptions(COLS, ROWS) as unknown as Record<
-            string,
-            unknown
-          >,
-        );
+        canvas.autogenerate(computeAutogenerateOptions(COLS, ROWS));
         canvas.shuffle(SHUFFLE_SPREAD);
         canvas.draw();
 
@@ -101,10 +94,11 @@ export default function PuzzleCanvas(_props: PuzzleCanvasProps): ReactElement {
           figure.shape.stroke('#e8a13a');
           canvas.redraw();
 
-          setTimeout(() => {
+          const tid = setTimeout(() => {
             figure.shape?.stroke(options.strokeColor);
             canvas.redraw();
           }, 200);
+          pendingTimeouts.push(tid);
         });
 
         canvas.attachSolvedValidator();
@@ -130,6 +124,7 @@ export default function PuzzleCanvas(_props: PuzzleCanvasProps): ReactElement {
 
     return () => {
       cancelled = true;
+      pendingTimeouts.forEach(clearTimeout);
       canvasRef.current?.clear();
       if (mountEl) {
         while (mountEl.firstChild) {
